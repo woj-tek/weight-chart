@@ -199,10 +199,15 @@ public class ChartDraw {
     				}
     			}
     		}
-    		
-    		if(mGoalWeight > minValue - 3*10 && mGoalWeight < minValue){
+
+    		/* added by aitorthered@senselesssolutions */
+    		if(mGoalWeight >= minValue - 3*10 && mGoalWeight < minValue){
     			minValue = (int)mGoalWeight-1*10;
     		}
+    		if(mMaxWeight <= maxValue + 2*10 && mMaxWeight > maxValue){
+    			maxValue = (int)mMaxWeight+(int)0.2*10;
+    		}
+
 
     		int stride = 1;
     		int delta = maxValue - minValue;
@@ -263,7 +268,7 @@ public class ChartDraw {
     		}
 
     		/* Added by aitorthered@senselesssolutions for max and goal weight */
-    		if(mMaxWeight < maxValue && mMaxWeight > minValue){
+    		if(mMaxWeight <= maxValue && mMaxWeight >= minValue){
     			float mMaxWeightPaint = chartPosY - chartSizeY * (mMaxWeight - minValue) / delta;
     			canvas.drawLine(-sizeX, mMaxWeightPaint, sizeX, mMaxWeightPaint, maxWeightPaint);
                 canvas.drawText(ctx.getString(R.string.max_weight_label), sizeX/3,
@@ -273,7 +278,7 @@ public class ChartDraw {
     	                     sizeX/3, sizeY/2, maxWeightPaint);
     			}
     		}
-    		if(mGoalWeight < maxValue && mGoalWeight > minValue){
+    		if(mGoalWeight <= maxValue && mGoalWeight >= minValue){
     			float mGoalWeightPaint = chartPosY - chartSizeY * (mGoalWeight - minValue) / delta;
     			canvas.drawLine(-sizeX, mGoalWeightPaint, sizeX, mGoalWeightPaint, goalWeightPaint);
                 canvas.drawText(ctx.getString(R.string.goal_weight_label), sizeX/3, mGoalWeightPaint-3, goalWeightPaint);
