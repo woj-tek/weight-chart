@@ -154,6 +154,18 @@ public class ChartActivity extends Activity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
+    	/* Added by aitorthered@senselesssolutions to prevent Null pointer Exception */
+    	if( mHeightDialog == null ){
+            mHeightDialog = new HeightDialog(this) {
+                protected void done() {
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    mToast = Toast.makeText(ChartActivity.this, R.string.tap_to_open_menu, Toast.LENGTH_LONG);
+                    mToast.show();
+                }
+            };
+            //showDialog(0);
+
+    	}
         return id > 0 ? mHeightDialog.createDialog(id) : createWeightUnitDialog();
     }
 
